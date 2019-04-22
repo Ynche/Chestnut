@@ -1,10 +1,13 @@
 from django import forms
 from .models import Tree
 from django.core.validators import RegexValidator
+import django_tables2 as tables
 
 
 class TreeForm(forms.ModelForm):
+    kind = list(Tree.KIND_CHOICES)
     type = list(Tree.TYPE_CHOICES)
+
     latin_name = forms.CharField(required=False,validators=[RegexValidator(r'^([A-Z][a-z]+\s*){1,3}$',message='Use convention http://thorpetrees.com/advice/table-of-latin-common-names/'
     )], widget=forms.TextInput(attrs={'class':'form-control'}))
     description = forms.CharField(required=False, widget=forms.Textarea(attrs={'class':'form-control'}))
@@ -18,8 +21,13 @@ class TreeForm(forms.ModelForm):
 
     class Meta:
         model=Tree
-        fields= ('type','latin_name','description','age','size','district','latitude','longitude')
+        fields= ('kind','type','latin_name','description','age','size','district','latitude','longitude')
 
 # latitude is between - 90 and 90.
 
 # longitude is between - 180 and 180.
+
+class TreeTable(tables.Table):
+    class Meta:
+        model = Tree
+        template_name = 'django_tables2/bootstrap.html'

@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'trees'
+    'trees',
+    'django_tables2'
+
 ]
 
 MIDDLEWARE = [

@@ -1,8 +1,9 @@
 from django.db import models
+from django.utils import timezone
 
 
 class Tree(models.Model):
-    TYPE_CHOICES = (
+    KIND_CHOICES = (
         ('A', 'Ash tree'),
         ('L', 'Linden tree'),
         ('P', 'Poplar tree'),
@@ -42,6 +43,15 @@ class Tree(models.Model):
         ('T', 'Triaditsa'),
 
     )
+    TYPE_CHOICES = (
+        ('B', 'Bush'),
+        ('F', 'Flower'),
+        ('G', 'Grass'),
+        ('T', 'Tree'),
+
+    )
+
+    kind = models.CharField(max_length=1, choices=KIND_CHOICES)
     type = models.CharField(max_length=1, choices=TYPE_CHOICES)
     latin_name = models.CharField(max_length=200)
     description = models.TextField(blank=True)
@@ -50,11 +60,41 @@ class Tree(models.Model):
     district = models.CharField(max_length=1, choices=DISTRICT_CHOICES)
     latitude = models.DecimalField(max_digits=7,decimal_places=5)
     longitude = models.DecimalField(max_digits=8,decimal_places=5)
-    
-
 
 
     def __str__(self):
-        return f"{self.name}, kind {self.kind}"
+        return f"{self.district}, kind {self.kind}"
 
 #https://support.google.com/maps/answer/18539?co=GENIE.Platform%3DDesktop&hl=en
+
+
+class Task(models.Model):
+    TASK_TYPE_CHOICES = (
+        ('C', 'Cut'),
+        ('F', 'Fertilize'),
+        ('L', 'Leaves Picking'),
+        ('P', 'Plant'),
+        ('T', 'Trim'),
+        ('W', 'Water'),
+
+    )
+    STATUS_CHOICES = (
+        ('A', 'Active'),
+        ('I', 'In Progress'),
+        ('C', 'Completed'),
+        ('S', 'Skipped'),
+    )
+    GENERATION_CHOICES = (
+        ('A', 'Automatic'),
+        ('M', 'Manual'),
+    )
+    task_type = models.CharField(max_length=1, choices=TASK_TYPE_CHOICES)
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES)
+    date_generated = models.DateField(default=timezone.now())
+    date_completed = models.DateField()
+    generation = models.CharField(max_length=1, choices=GENERATION_CHOICES)
+    description = models.TextField(blank=True)
+    task_force = models.CharField(max_length=200)
+    cost = models.DecimalField(max_digits=8, decimal_places=2)
+
+#https://docs.djangoproject.com/en/2.2/topics/i18n/timezones/

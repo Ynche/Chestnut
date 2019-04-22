@@ -3,8 +3,7 @@ body {
 background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRoIhrjVELQR9vEtaEXQvNtVtwukD5DG5C3GF0jg7ho-_FQuDr);
 background-size: cover;
 content: "";
-display: block;
-
+display: contents;
 position: absolute;
 top: 0;
 left: 0;
