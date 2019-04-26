@@ -12,8 +12,10 @@ class Tree(models.Model):
         ('blue', 'Blue'),
         ('green', 'Green'),
         ('black', 'Black'),
+        ('aaaaa', '.....'),
     )
     KIND_CHOICES = (
+        ('0', '-------------------------------------------'),
         ('A', 'Ash tree'),
         ('L', 'Linden tree'),
         ('P', 'Poplar tree'),
@@ -27,6 +29,7 @@ class Tree(models.Model):
 
     )
     DISTRICT_CHOICES = (
+        ('0', '--------------------------------------'),
         ('B', 'Bankya'),
         ('H', 'Vitosha'),
         ('R', 'Vrabnitsa'),
@@ -54,6 +57,7 @@ class Tree(models.Model):
 
     )
     TYPE_CHOICES = (
+        ('0', '----------------------------------------'),
         ('B', 'Bush'),
         ('F', 'Flower'),
         ('G', 'Grass'),
@@ -82,7 +86,7 @@ class Task(models.Model):
     TASK_TYPE_CHOICES = (
         ('C', 'Cut'),
         ('F', 'Fertilize'),
-        ('L', 'Leaves Picking'),
+        ('L', 'Picking Leaves'),
         ('P', 'Plant'),
         ('T', 'Trim'),
         ('W', 'Water'),
