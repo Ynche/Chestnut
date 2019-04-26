@@ -3,6 +3,16 @@ from django.utils import timezone
 
 
 class Tree(models.Model):
+    KIND = (
+        ('blue', 'Blue'),
+        ('green', 'Green'),
+        ('black', 'Black'),
+    )
+    TYPE = (
+        ('blue', 'Blue'),
+        ('green', 'Green'),
+        ('black', 'Black'),
+    )
     KIND_CHOICES = (
         ('A', 'Ash tree'),
         ('L', 'Linden tree'),
