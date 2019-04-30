@@ -1,3 +1,5 @@
 pip install django-bootstrap3
+pip install django-bootstrap4
 pip install django-tables2
 pip install django-filter
+pip install django-bootstrap-datepicker-plus

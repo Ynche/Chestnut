@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from .models import Tree
+from .models import Tree,Task
 from django.views.generic import  ListView, DetailView, UpdateView, DeleteView, CreateView
-from .forms import TreeForm,TreeTable,TreeFilter
+from .forms import TreeForm,TreeTable,TreeFilter,TaskForm
 from django_tables2 import RequestConfig
 from django_filters.views import FilterView
 from django_tables2.views import SingleTableMixin
@@ -36,3 +36,9 @@ class FilteredTreeTableView(SingleTableMixin, FilterView):
 
 #https://django-filter.readthedocs.io/en/master/ref/filterset.html
 #https://django-tables2.readthedocs.io/en/latest/pages/export.html - For exporting CSV
+
+class TaskCreate(CreateView):
+    model = Task
+    form_class = TaskForm
+    template_name = 'task-create.html'
+    success_url = '/task/all/'

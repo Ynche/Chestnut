@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'django_tables2',
     'django_filters',
     'bootstrap3',
+    'bootstrap4',
+    'bootstrap_datepicker_plus',
 
 ]
 
@@ -120,6 +122,8 @@ USE_L10N = True
 
 USE_TZ = True
 
+DATE_INPUT_FORMATS = ['%d.%m.%Y']
+#https://stackoverflow.com/questions/30911612/how-can-i-set-a-datefield-format-in-django-from-the-model
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/

@@ -1,21 +1,15 @@
 from django.db import models
 from django.utils import timezone
+from datetime import date
+#https://docs.djangoproject.com/en/2.2/ref/models/fields/
 
 
+
+#https://docs.djangoproject.com/en/2.2/topics/i18n/timezones/
 class Tree(models.Model):
-    KIND = (
-        ('blue', 'Blue'),
-        ('green', 'Green'),
-        ('black', 'Black'),
-    )
-    TYPE = (
-        ('blue', 'Blue'),
-        ('green', 'Green'),
-        ('black', 'Black'),
-        ('aaaaa', '.....'),
-    )
+
     KIND_CHOICES = (
-        ('0', '-------------------------------------------'),
+        ('0', ' '),
         ('A', 'Ash tree'),
         ('L', 'Linden tree'),
         ('P', 'Poplar tree'),
@@ -29,7 +23,7 @@ class Tree(models.Model):
 
     )
     DISTRICT_CHOICES = (
-        ('0', '--------------------------------------'),
+        ('0', '  '),
         ('B', 'Bankya'),
         ('H', 'Vitosha'),
         ('R', 'Vrabnitsa'),
@@ -57,29 +51,47 @@ class Tree(models.Model):
 
     )
     TYPE_CHOICES = (
-        ('0', '----------------------------------------'),
+        ('0', ' '),
         ('B', 'Bush'),
         ('F', 'Flower'),
         ('G', 'Grass'),
         ('T', 'Tree'),
+    )
+
+    TYPE = (
+        ('B', 'Bush'),
+        ('F', 'Flower'),
+        ('G', 'Grass'),
+        ('T', 'Tree'),
+    )
+    LIFECYCLE = (
+        ('0', ' '),
+        ('A', 'Healthy'),
+        ('I', 'Unhealthy'),
+        ('P', 'Passed'),
 
     )
 
     kind = models.CharField(max_length=1, choices=KIND_CHOICES)
     type = models.CharField(max_length=1, choices=TYPE_CHOICES)
     latin_name = models.CharField(max_length=200)
-    description = models.TextField(blank=True)
-    age = models.PositiveIntegerField(blank=True)
+    description = models.TextField(blank=True,null=True)
+    origin_date = models.DateField(help_text="Use the following format:YYYY-MM-DD")
+    end_date = models.DateField(help_text="Use the following format:YYYY-MM-DD",blank=True,null=True)
+    lifecycle_status = models.CharField(max_length=1, choices=LIFECYCLE)
     size = models.PositiveIntegerField(blank=True)
     district = models.CharField(max_length=1, choices=DISTRICT_CHOICES)
     latitude = models.DecimalField(max_digits=7,decimal_places=5)
     longitude = models.DecimalField(max_digits=8,decimal_places=5)
 
 
+
     def __str__(self):
-        return f"{self.district}, kind {self.kind}"
+        return f'{self.pk}, {self.get_kind_display()}, {self.get_district_display()}'
+        #return self.get_kind_display()
 
 #https://support.google.com/maps/answer/18539?co=GENIE.Platform%3DDesktop&hl=en
+#http://soilquality.org/indicators.html
 
 
 class Task(models.Model):
@@ -104,11 +116,10 @@ class Task(models.Model):
     )
     task_type = models.CharField(max_length=1, choices=TASK_TYPE_CHOICES)
     status = models.CharField(max_length=1, choices=STATUS_CHOICES)
-    date_generated = models.DateField(default=timezone.now())
+    date_generated = models.DateField(default=date.today)
     date_completed = models.DateField()
     generation = models.CharField(max_length=1, choices=GENERATION_CHOICES)
     description = models.TextField(blank=True)
     task_force = models.CharField(max_length=200)
     cost = models.DecimalField(max_digits=8, decimal_places=2)
-
-#https://docs.djangoproject.com/en/2.2/topics/i18n/timezones/
+    trees = models.ManyToManyField(Tree)
