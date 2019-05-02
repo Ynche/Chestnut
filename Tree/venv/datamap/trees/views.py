@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import Tree,Task
 from django.views.generic import  ListView, DetailView, UpdateView, DeleteView, CreateView
-from .forms import TreeForm,TreeTable,TreeFilter,TaskForm
+from .forms import TreeForm,TreeTable,TreeFilter,TaskForm,TaskTable,TaskFilter
 from django_tables2 import RequestConfig
 from django_filters.views import FilterView
 from django_tables2.views import SingleTableMixin
@@ -16,7 +16,7 @@ class TreeCreate(CreateView):
     model = Tree
     form_class = TreeForm
     template_name = 'create.html'
-    success_url = '/trees/all/'
+    success_url = '/trees/filtered_tree_table/'
 
 def tree_table(request):
     table = TreeTable(Tree.objects.all())
@@ -41,4 +41,10 @@ class TaskCreate(CreateView):
     model = Task
     form_class = TaskForm
     template_name = 'task-create.html'
-    success_url = '/task/all/'
+    success_url = '/trees/filtered_task_table/'
+
+class FilteredTaskTableView(SingleTableMixin, FilterView):
+    table_class = TaskTable
+    model = Task
+    template_name = 'task-table-filter.html'
+    filterset_class = TaskFilter
