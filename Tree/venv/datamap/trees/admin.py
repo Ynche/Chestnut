@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import Tree
-from .models import Task
+from .models import Tree,Task
+
 
 # Register your models here.
 

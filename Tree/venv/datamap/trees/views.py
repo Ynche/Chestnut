@@ -15,8 +15,14 @@ class TreeList(ListView):
 class TreeCreate(CreateView):
     model = Tree
     form_class = TreeForm
-    template_name = 'create.html'
-    success_url = '/trees/filtered_tree_table/'
+    template_name = 'tree-create.html'
+    success_url = '/trees/tree-table-filter/'
+
+class TreeUpdate(UpdateView):
+    model = Tree
+    form_class = TreeForm
+    template_name = 'tree-create.html'
+    success_url = '/trees/tree-table-filter/'
 
 def tree_table(request):
     table = TreeTable(Tree.objects.all())
@@ -41,7 +47,13 @@ class TaskCreate(CreateView):
     model = Task
     form_class = TaskForm
     template_name = 'task-create.html'
-    success_url = '/trees/filtered_task_table/'
+    success_url = '/trees/task-table-filter/'
+
+class TaskUpdate(UpdateView):
+    model = Task
+    form_class = TaskForm
+    template_name = 'task-create.html'
+    success_url = '/trees/task-table-filter/'
 
 class FilteredTaskTableView(SingleTableMixin, FilterView):
     table_class = TaskTable

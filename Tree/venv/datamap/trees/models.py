@@ -72,8 +72,8 @@ class Tree(models.Model):
 
     )
 
-    kind = models.CharField(max_length=1, choices=KIND_CHOICES)
     type = models.CharField(max_length=1, choices=TYPE_CHOICES)
+    kind = models.CharField(max_length=1, choices=KIND_CHOICES)
     latin_name = models.CharField(max_length=200)
     description = models.TextField(blank=True,null=True)
     origin_date = models.DateField(help_text="Use the following format:YYYY-MM-DD")

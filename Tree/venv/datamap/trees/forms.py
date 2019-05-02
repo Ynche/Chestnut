@@ -7,22 +7,23 @@ import django_filters as django_filters
 from bootstrap_datepicker_plus import DatePickerInput
 from django.conf import settings
 from datetime import date
+from django_tables2.utils import A
 
 
 #https://github.com/monim67/django-bootstrap-datepicker-plus/blob/master/docs/Walkthrough.rst
 
 class TreeForm(forms.ModelForm):
     #kind = list(Tree.KIND_CHOICES)
+    type = forms.ChoiceField(choices=Tree.TYPE_CHOICES)
     kind = forms.ChoiceField(choices=Tree.KIND_CHOICES)
     #type = list(Tree.TYPE)
     #type = forms.CharField(max_length=30, widget=forms.Select(choices=Tree.TYPE))
-    type = forms.ChoiceField(choices=Tree.TYPE_CHOICES)
     latin_name = forms.CharField(required=False,validators=[RegexValidator(r'^([A-Z][a-z]+\s*){1,3}$',message='Use convention http://thorpetrees.com/advice/table-of-latin-common-names/'
     )], widget=forms.TextInput(attrs={'class':'form-control'}))
     description = forms.CharField(required=False, widget=forms.Textarea(attrs={'class':'form-control'}))
     #origin_date = forms.DateField(required=False, widget=forms.TextInput(attrs={'class':'form-control'}))
     origin_date = forms.DateField(required=False,input_formats=settings.DATE_INPUT_FORMATS,widget=DatePickerInput(options={"format": "mm/dd/yyyy","autoclose": True}))
-    end_date = forms.DateField(required=False,input_formats=settings.DATE_INPUT_FORMATS,help_text="Use the following format", widget=forms.TextInput(attrs={'class':'form-control'}))
+    end_date = forms.DateField(required=False,input_formats=settings.DATE_INPUT_FORMATS,help_text="Not required.Use the following format", widget=forms.TextInput(attrs={'class':'form-control'}))
     lifecycle_status = forms.ChoiceField(choices=Tree.LIFECYCLE)
     size = forms.IntegerField(required=False,widget=forms.TextInput(attrs={'class':'form-control'}))
     district = list(Tree.DISTRICT_CHOICES)
@@ -33,11 +34,17 @@ class TreeForm(forms.ModelForm):
 
     class Meta:
         model=Tree
-        fields= ('kind','type','latin_name','description','origin_date','size','district','latitude','longitude')
+        fields= ('type','kind','latin_name','description','origin_date','end_date','lifecycle_status','size','district','latitude','longitude')
 
 # latitude is between - 90 and 90. longitude is between - 180 and 180.
 
 class TreeTable(tables.Table):
+    #edit = tables.LinkColumn('tree-update', text='Edit', args=[A('pk')], orderable=False, empty_values=())
+
+    #def render_edit(self):
+        #return 'Edit'
+    #latin_name = tables.LinkColumn("tree-edit", args=[A("pk")], empty_values=()) #- Why this line of code does not work/tree-edit cannot be found???
+    latin_name = tables.TemplateColumn('<a href="/trees/tree-edit/{{record.id}}/">{{record.latin_name}}</a>')
     class Meta:
         model = Tree
         template_name = 'django_tables2/bootstrap.html'
@@ -46,13 +53,13 @@ class TreeTable(tables.Table):
 class TreeFilter(django_filters.FilterSet):
     class Meta:
         model = Tree
-        fields = ['kind','type','latin_name','description','origin_date','end_date','size','district','latitude','longitude']
+        fields = ['kind','type','latin_name','description','origin_date','end_date','size','lifecycle_status','district','latitude','longitude']
 
 
 class TaskForm(forms.ModelForm):
     task_type = forms.ChoiceField(choices=Task.TASK_TYPE_CHOICES)
     status = forms.ChoiceField(choices=Task.STATUS_CHOICES)
-    date_generated = forms.DateField(initial=date.today,widget=forms.TextInput(attrs={'class':'form-control'}))
+    date_generated = forms.DateField(initial=date.today, input_formats=settings.DATE_INPUT_FORMATS,widget=forms.TextInput(attrs={'class':'form-control'}))
     date_completed = forms.DateField(required=False, input_formats=settings.DATE_INPUT_FORMATS,widget=forms.TextInput(attrs={'class':'form-control'}))
     generation = forms.ChoiceField(choices=Task.GENERATION_CHOICES)
     description = forms.CharField(required=False, widget=forms.Textarea(attrs={'class':'form-control'}))
@@ -63,6 +70,7 @@ class TaskForm(forms.ModelForm):
         fields= ('task_type','status','date_generated','date_completed','generation','description','task_force','cost','trees')
 
 class TaskTable(tables.Table):
+    task_type = tables.TemplateColumn('<a href="/trees/task-edit/{{record.id}}/">{{record.task_type}}</a>')
     class Meta:
         model = Task
         template_name = 'django_tables2/bootstrap.html'
