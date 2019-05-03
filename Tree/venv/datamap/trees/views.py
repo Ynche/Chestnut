@@ -21,8 +21,15 @@ class TreeCreate(CreateView):
 class TreeUpdate(UpdateView):
     model = Tree
     form_class = TreeForm
-    template_name = 'tree-create.html'
+    template_name = 'tree-edit.html'
     success_url = '/trees/tree-table-filter/'
+
+
+class TreeDelete(DeleteView):
+    model = Tree
+    template_name = 'tree-delete.html'
+    success_url = '/trees/tree-table-filter/'
+
 
 def tree_table(request):
     table = TreeTable(Tree.objects.all())

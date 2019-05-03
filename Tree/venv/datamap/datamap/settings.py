@@ -116,13 +116,15 @@ LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
 
-USE_I18N = True
+USE_I18N = True #  if Django should activate translation.
 
-USE_L10N = True
+USE_L10N = True #sets the default Django formats to be used
 
 USE_TZ = True
 
 DATE_INPUT_FORMATS = ['%d.%m.%Y']
+DATE_FORMAT =  ['%d.%m.%Y']
+SHORT_DATE_FORMAT  = ['%d.%m.%Y']
 #https://stackoverflow.com/questions/30911612/how-can-i-set-a-datefield-format-in-django-from-the-model
 
 # Static files (CSS, JavaScript, Images)

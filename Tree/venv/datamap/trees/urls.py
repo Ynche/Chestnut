@@ -10,6 +10,7 @@ urlpatterns =[
     re_path('^tree-create/$', views.TreeCreate.as_view(), name='tree-create'),
     #path('tree-edit/(\d+)/', views.TreeUpdate.as_view(), name='tree-edit'),
     re_path('^tree-edit/(?P<pk>\d+)/$', views.TreeUpdate.as_view(), name='tree-edit'),
+    re_path('^tree-delete/(?P<pk>\d+)/$', views.TreeDelete.as_view(), name='tree-delete'),
     re_path('^table/$', views.tree_table, name='tree_table'),# not to be used
     re_path('^tree-table-filter/$', views.FilteredTreeTableView.as_view(), name='tree-table-filter'),
     re_path('^task-create/$', views.TaskCreate.as_view(), name='task-create'),

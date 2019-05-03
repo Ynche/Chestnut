@@ -9,7 +9,7 @@ from datetime import date
 class Tree(models.Model):
 
     KIND_CHOICES = (
-        ('0', ' '),
+        ('', 'Select Kind'),
         ('A', 'Ash tree'),
         ('L', 'Linden tree'),
         ('P', 'Poplar tree'),
@@ -23,7 +23,7 @@ class Tree(models.Model):
 
     )
     DISTRICT_CHOICES = (
-        ('0', '  '),
+        ('', 'Select District'),
         ('B', 'Bankya'),
         ('H', 'Vitosha'),
         ('R', 'Vrabnitsa'),
@@ -51,36 +51,30 @@ class Tree(models.Model):
 
     )
     TYPE_CHOICES = (
-        ('0', ' '),
+        ('', 'Select Type'),
         ('B', 'Bush'),
         ('F', 'Flower'),
         ('G', 'Grass'),
         ('T', 'Tree'),
     )
 
-    TYPE = (
-        ('B', 'Bush'),
-        ('F', 'Flower'),
-        ('G', 'Grass'),
-        ('T', 'Tree'),
-    )
     LIFECYCLE = (
-        ('0', ' '),
+        ('', 'Select Lifecycle Status'),
         ('A', 'Healthy'),
         ('I', 'Unhealthy'),
         ('P', 'Passed'),
 
     )
 
-    type = models.CharField(max_length=1, choices=TYPE_CHOICES)
-    kind = models.CharField(max_length=1, choices=KIND_CHOICES)
+    type = models.CharField(blank=False,max_length=1, choices=TYPE_CHOICES)
+    kind = models.CharField(blank=False,max_length=1, choices=KIND_CHOICES)
     latin_name = models.CharField(max_length=200)
     description = models.TextField(blank=True,null=True)
-    origin_date = models.DateField(help_text="Use the following format:YYYY-MM-DD")
+    origin_date = models.DateField(help_text="Use the following format:YYYY-MM-DD",blank=True,null=True)
     end_date = models.DateField(help_text="Use the following format:YYYY-MM-DD",blank=True,null=True)
-    lifecycle_status = models.CharField(max_length=1, choices=LIFECYCLE)
-    size = models.PositiveIntegerField(blank=True)
-    district = models.CharField(max_length=1, choices=DISTRICT_CHOICES)
+    lifecycle_status = models.CharField(blank=False,max_length=1, choices=LIFECYCLE)
+    size = models.PositiveIntegerField(blank=True,null=True)
+    district = models.CharField(blank=False,max_length=1, choices=DISTRICT_CHOICES)
     latitude = models.DecimalField(max_digits=7,decimal_places=5)
     longitude = models.DecimalField(max_digits=8,decimal_places=5)
 
@@ -96,6 +90,7 @@ class Tree(models.Model):
 
 class Task(models.Model):
     TASK_TYPE_CHOICES = (
+        ('', 'Select Task Type'),
         ('C', 'Cut'),
         ('F', 'Fertilize'),
         ('L', 'Picking Leaves'),
@@ -105,21 +100,23 @@ class Task(models.Model):
 
     )
     STATUS_CHOICES = (
+        ('', 'Select Task Status'),
         ('A', 'Active'),
         ('I', 'In Progress'),
         ('C', 'Completed'),
         ('S', 'Skipped'),
     )
     GENERATION_CHOICES = (
+        ('', 'Select Generation Type'),
         ('A', 'Automatic'),
         ('M', 'Manual'),
     )
-    task_type = models.CharField(max_length=1, choices=TASK_TYPE_CHOICES)
-    status = models.CharField(max_length=1, choices=STATUS_CHOICES)
+    task_type = models.CharField(blank=False,max_length=1, choices=TASK_TYPE_CHOICES)
+    status = models.CharField(blank=False,max_length=1, choices=STATUS_CHOICES)
     date_generated = models.DateField(default=date.today)
     date_completed = models.DateField(blank=True,null=True)
-    generation = models.CharField(max_length=1, choices=GENERATION_CHOICES)
+    generation = models.CharField(blank=False,max_length=1, choices=GENERATION_CHOICES)
     description = models.TextField(blank=True,null=True)
-    task_force = models.CharField(max_length=200)
+    task_force = models.CharField(blank=True,null=True,max_length=200)
     cost = models.DecimalField(blank=True,null=True,max_digits=8, decimal_places=2)
     trees = models.ManyToManyField(Tree)
