@@ -15,6 +15,7 @@ urlpatterns =[
     re_path('^tree-table-filter/$', views.FilteredTreeTableView.as_view(), name='tree-table-filter'),
     re_path('^task-create/$', views.TaskCreate.as_view(), name='task-create'),
     re_path('^task-edit/(?P<pk>\d+)/$', views.TaskUpdate.as_view(), name='task-edit'),
+    re_path('^task-delete/(?P<pk>\d+)/$', views.TaskDelete.as_view(), name='task-delete'),
     re_path('^task-table-filter/$', views.FilteredTaskTableView.as_view(), name='task-table-filter'),
 
 ]

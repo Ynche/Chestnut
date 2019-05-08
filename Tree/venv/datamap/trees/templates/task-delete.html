@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 </head>
 <body>
 <form method="post">
     {% csrf_token %}
-    <h1>Are you sure you want to delete Task {{task.id}}</h1>
+    <h1>Are you sure you want to delete Task {{task.id}} {{task.get_type_display}}</h1>
+    <!-- the get__display does not show in the html!!!!!!!! -->
     <div class="row">
         <div class="col-lg-6">
             <img src="https://media.istockphoto.com/photos/tree-picture-id543052538?k=6&m=543052538&s=612x612&w=0&h=YP7fBhjDe1dQGpj00Bu4ywsCjTljdW7dB_HKjp7_DDU=" style="width:50%;"></img>

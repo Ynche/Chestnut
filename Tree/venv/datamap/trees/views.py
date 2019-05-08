@@ -60,7 +60,7 @@ class TaskCreate(CreateView):
 class TaskUpdate(UpdateView):
     model = Task
     form_class = TaskForm
-    template_name = 'task-create.html'
+    template_name = 'task-edit.html'
     success_url = '/trees/task-table-filter/'
 
 class TaskDelete(DeleteView):
