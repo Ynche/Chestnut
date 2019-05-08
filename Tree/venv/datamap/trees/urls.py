@@ -16,5 +16,6 @@ urlpatterns =[
     re_path('^task-create/$', views.TaskCreate.as_view(), name='task-create'),
     re_path('^task-edit/(?P<pk>\d+)/$', views.TaskUpdate.as_view(), name='task-edit'),
     re_path('^task-table-filter/$', views.FilteredTaskTableView.as_view(), name='task-table-filter'),
+
 ]
 

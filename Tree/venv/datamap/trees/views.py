@@ -5,6 +5,7 @@ from .forms import TreeForm,TreeTable,TreeFilter,TaskForm,TaskTable,TaskFilter
 from django_tables2 import RequestConfig
 from django_filters.views import FilterView
 from django_tables2.views import SingleTableMixin
+
 # Create your views here.
 
 
@@ -62,8 +63,16 @@ class TaskUpdate(UpdateView):
     template_name = 'task-create.html'
     success_url = '/trees/task-table-filter/'
 
+class TaskDelete(DeleteView):
+    model = Task
+    template_name = 'task-delete.html'
+    success_url = '/trees/task-table-filter/'
+
 class FilteredTaskTableView(SingleTableMixin, FilterView):
     table_class = TaskTable
     model = Task
     template_name = 'task-table-filter.html'
     filterset_class = TaskFilter
+    #table_pagination = {'per_page': 10} How should I use it?
+
+

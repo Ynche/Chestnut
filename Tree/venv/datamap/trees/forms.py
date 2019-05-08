@@ -56,7 +56,7 @@ class TreeTable(tables.Table):
 class TreeFilter(django_filters.FilterSet):
     class Meta:
         model = Tree
-        fields = ['kind','type','latin_name','description','origin_date','end_date','size','lifecycle_status','district','latitude','longitude']
+        fields = ['id','kind','type','latin_name','description','origin_date','end_date','size','lifecycle_status','district','latitude','longitude']
 
 
 class TaskForm(forms.ModelForm):
@@ -79,10 +79,11 @@ class TaskTable(tables.Table):
     class Meta:
         model = Task
         template_name = 'django_tables2/bootstrap.html'
+        fields = ['id','task_type','status','date_generated','date_completed','generation','description','task_force','cost','all_trees']
 
 
 class TaskFilter(django_filters.FilterSet):
     class Meta:
         model = Task
-        fields = ['task_type','status','date_generated','date_completed','generation','description','task_force','cost','trees']
+        fields = ['id','task_type','status','date_generated','date_completed','generation','description','task_force','cost','trees']
 

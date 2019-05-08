@@ -120,3 +120,7 @@ class Task(models.Model):
     task_force = models.CharField(blank=True,null=True,max_length=200)
     cost = models.DecimalField(blank=True,null=True,max_digits=8, decimal_places=2)
     trees = models.ManyToManyField(Tree)
+
+    @property
+    def all_trees(self):
+        return ', '.join([x.get_kind_display() for x in self.trees.all()])
