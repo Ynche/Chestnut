@@ -5,6 +5,8 @@ from .forms import TreeForm,TreeTable,TreeFilter,TaskForm,TaskTable,TaskFilter
 from django_tables2 import RequestConfig
 from django_filters.views import FilterView
 from django_tables2.views import SingleTableMixin
+from accounts.models import ProfileUser
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
@@ -18,6 +20,11 @@ class TreeCreate(CreateView):
     form_class = TreeForm
     template_name = 'tree-create.html'
     success_url = '/trees/tree-table-filter/'
+
+    def form_valid(self, form):
+        user = ProfileUser.objects.all().filter(user__pk=self.request.user.id)[0]
+        form.instance.user = user
+        return super().form_valid(form)
 
 class TreeUpdate(UpdateView):
     model = Tree
@@ -57,6 +64,11 @@ class TaskCreate(CreateView):
     template_name = 'task-create.html'
     success_url = '/trees/task-table-filter/'
 
+    def form_valid(self, form):
+        user = ProfileUser.objects.all().filter(user__pk=self.request.user.id)[0]
+        form.instance.user = user
+        return super().form_valid(form)
+
 class TaskUpdate(UpdateView):
     model = Task
     form_class = TaskForm
@@ -71,8 +83,26 @@ class TaskDelete(DeleteView):
 class FilteredTaskTableView(SingleTableMixin, FilterView):
     table_class = TaskTable
     model = Task
-    template_name = 'task-table-filter.html'
+    template_name = 'mytask-table-filter.html'
     filterset_class = TaskFilter
+    context_object_name = 'tasks'
     #table_pagination = {'per_page': 10} How should I use it?
+
+class MyFilteredTaskTableView(SingleTableMixin, FilterView,LoginRequiredMixin):
+    table_class = TaskTable
+    model = Task
+    template_name = 'mytask-table-filter.html'
+    filterset_class = TaskFilter
+    context_object_name = 'tasks'
+
+    def get_queryset(self):
+        user_id = int(self.request.user.id)
+
+        try:
+            user = ProfileUser.objects.all().filter(user__pk=user_id)[0]
+            task = Task.objects.all().filter(user = user.pk)
+            return task
+        except:
+            return []
 
 

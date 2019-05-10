@@ -1,25 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+{% extends 'index.html'%}
+{% block 'body' %}
 
-</head>
-<body>
+
 <form method="post">
     {% csrf_token %}
-    <h1>Are you sure you want to delete Task {{task.id}} {{task.get_type_display}}</h1>
+    <h1>Are you sure you want to delete Task {{task.id}} {{task.get_task_type_display}} with status {{task.get_status_display}}</h1>
     <!-- the get__display does not show in the html!!!!!!!! -->
     <div class="row">
+        <div class="col-lg-2">
+            <input type="submit" class="btn btn-danger" value="Confirm" >
+        </div>
         <div class="col-lg-6">
             <img src="https://media.istockphoto.com/photos/tree-picture-id543052538?k=6&m=543052538&s=612x612&w=0&h=YP7fBhjDe1dQGpj00Bu4ywsCjTljdW7dB_HKjp7_DDU=" style="width:50%;"></img>
         </div>
-        <div class="col-lg-6">
-                <input type="submit" class="btn btn-danger" value="Confirm">
-
+        <div class="col-lg-4">
         </div>
     </div>
     </form>
-</body>
-</html>
+
+{% endblock %}

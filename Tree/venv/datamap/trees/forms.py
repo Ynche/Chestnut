@@ -2,8 +2,8 @@ from django import forms
 from .models import Tree,Task
 from django.core.validators import RegexValidator
 import django_tables2 as tables
-from django_filters import FilterSet
 import django_filters as django_filters
+from django_filters import FilterSet,CharFilter
 from bootstrap_datepicker_plus import DatePickerInput
 from django.conf import settings
 from datetime import date
@@ -56,7 +56,7 @@ class TreeTable(tables.Table):
 class TreeFilter(django_filters.FilterSet):
     class Meta:
         model = Tree
-        fields = ['id','kind','type','latin_name','description','origin_date','end_date','size','lifecycle_status','district','latitude','longitude']
+        fields = ['id','kind','type','latin_name','description','origin_date','end_date','size','lifecycle_status','district','latitude','longitude','user']
 
 
 class TaskForm(forms.ModelForm):
@@ -79,11 +79,12 @@ class TaskTable(tables.Table):
     class Meta:
         model = Task
         template_name = 'django_tables2/bootstrap.html'
-        fields = ['id','task_type','status','date_generated','date_completed','generation','description','task_force','cost','all_trees']
+        fields = ['id','task_type','status','date_generated','date_completed','generation','description','task_force','cost','all_trees','user']
 
 
 class TaskFilter(django_filters.FilterSet):
     class Meta:
         model = Task
-        fields = ['id','task_type','status','date_generated','date_completed','generation','description','task_force','cost','trees']
+        task_type = CharFilter(label='Task Type')#check if this works and add for the rest
+        fields = ['id','task_type','status','date_generated','date_completed','generation','description','task_force','cost','user','trees']
 

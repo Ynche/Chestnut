@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from datetime import date
+from accounts.models import ProfileUser
 #https://docs.djangoproject.com/en/2.2/ref/models/fields/
 
 
@@ -77,6 +78,7 @@ class Tree(models.Model):
     district = models.CharField(blank=False,max_length=1, choices=DISTRICT_CHOICES)
     latitude = models.DecimalField(max_digits=7,decimal_places=5)
     longitude = models.DecimalField(max_digits=8,decimal_places=5)
+    user = models.ForeignKey(ProfileUser, on_delete=models.CASCADE)
 
 
 
@@ -120,7 +122,8 @@ class Task(models.Model):
     task_force = models.CharField(blank=True,null=True,max_length=200)
     cost = models.DecimalField(blank=True,null=True,max_digits=8, decimal_places=2)
     trees = models.ManyToManyField(Tree)
+    user = models.ForeignKey(ProfileUser,on_delete=models.CASCADE)
 
     @property
     def all_trees(self):
-        return ', '.join([x.get_kind_display() for x in self.trees.all()])
+        return '; '.join([str(x) for x in self.trees.all()]) # here it was x.get_kind_display() instead of str(x)

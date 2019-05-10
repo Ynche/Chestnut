@@ -3,6 +3,7 @@ from . import views
 
 
 app_name = 'trees'
+
 urlpatterns =[
     #path('', views.index, name='initial'),
     #re_path('all/(?P<pk>[-\w]+)/', views.TreeList.as_view(), name='tree'),
@@ -17,6 +18,7 @@ urlpatterns =[
     re_path('^task-edit/(?P<pk>\d+)/$', views.TaskUpdate.as_view(), name='task-edit'),
     re_path('^task-delete/(?P<pk>\d+)/$', views.TaskDelete.as_view(), name='task-delete'),
     re_path('^task-table-filter/$', views.FilteredTaskTableView.as_view(), name='task-table-filter'),
+    re_path('^mytask-table-filter/$', views.MyFilteredTaskTableView.as_view(), name='mytask-table-filter'),
 
 ]
 

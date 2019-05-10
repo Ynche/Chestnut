@@ -10,7 +10,7 @@
     </head>
     <body>
         {% if filter %}
-    <form action="" method="get" class="form form-inline" style="padding: 1% 1%">
+    <form action="" method="get" class="form form-inline" style="padding: 1% 1%;border-spacing: 1cm;margin-left: -2cm;margin-right: -2cm">
             {% bootstrap_form filter.form layout='inline' size='sm'%}
         {% bootstrap_button 'filter' %}
     </form>
