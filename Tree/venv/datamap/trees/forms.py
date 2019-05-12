@@ -3,11 +3,13 @@ from .models import Tree,Task
 from django.core.validators import RegexValidator
 import django_tables2 as tables
 import django_filters as django_filters
-from django_filters import FilterSet,CharFilter
+from django_filters import FilterSet,ChoiceFilter
 from bootstrap_datepicker_plus import DatePickerInput
 from django.conf import settings
 from datetime import date
 from django_tables2.utils import A
+from accounts.models import ProfileUser
+from django.contrib.auth.models import User
 
 
 
@@ -81,10 +83,21 @@ class TaskTable(tables.Table):
         template_name = 'django_tables2/bootstrap.html'
         fields = ['id','task_type','status','date_generated','date_completed','generation','description','task_force','cost','all_trees','user']
 
+def get_user_list():
+    user_list = []
+    users = User.objects.all()
+    x = 0
+    for user in users:
+        user_list.append((str(x),user.username))
+        x +=1
+    return  user_list
 
 class TaskFilter(django_filters.FilterSet):
+    task_type = django_filters.ChoiceFilter(choices=Task.TASK_TYPE_CHOICES,empty_label='Task Type')
+    status = django_filters.ChoiceFilter(choices=Task.STATUS_CHOICES, empty_label='Status')
+    generation = django_filters.ChoiceFilter(choices=Task.GENERATION_CHOICES, empty_label="Generation Type")
+    #user = django_filters.ChoiceFilter(choices=get_user_list,empty_label="Users") #This works for users when the task is created by the user
     class Meta:
         model = Task
-        task_type = CharFilter(label='Task Type')#check if this works and add for the rest
         fields = ['id','task_type','status','date_generated','date_completed','generation','description','task_force','cost','user','trees']
 

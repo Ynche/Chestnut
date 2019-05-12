@@ -21,6 +21,7 @@
     </table>
  {% else %}
     <<h1>There are no Tasks </h1>
+    <a href="{% url 'trees:tree-table-filter' %}" class="btn btn-primary">Go Back</a>
  {% endif %}
 
 {% endblock %}
