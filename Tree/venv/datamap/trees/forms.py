@@ -56,6 +56,10 @@ class TreeTable(tables.Table):
 
 
 class TreeFilter(django_filters.FilterSet):
+    type = django_filters.ChoiceFilter(choices=Tree.TYPE_CHOICES, empty_label='Type')
+    kind = django_filters.ChoiceFilter(choices=Tree.KIND_CHOICES, empty_label='Kind')
+    lifecycle_status = django_filters.ChoiceFilter(choices=Tree.LIFECYCLE, empty_label='Lifecycle Status')
+    district = django_filters.ChoiceFilter(choices=Tree.DISTRICT_CHOICES, empty_label='District')
     class Meta:
         model = Tree
         fields = ['id','kind','type','latin_name','description','origin_date','end_date','size','lifecycle_status','district','latitude','longitude','user']

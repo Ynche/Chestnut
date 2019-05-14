@@ -1,0 +1,50 @@
+{% extends 'index.html'%}
+{% block 'body' %}
+
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'style accounts.css' %}">
+
+
+
+<div class="container">
+
+        {% if not user.is_authenticated %}
+        <p>
+             Please, <a style="color:black" href="{% url 'login' %}">Login here</a>
+        </p>
+
+        <p>
+            Do not have an account? <a style="color:orange" href="{% url 'signup' %}">Sign up here</a>
+        </p>
+
+        {% else %}
+    <div class="row">
+        <div class="col-lg-6">
+            <form style="border: 2px solid grey; border-radius: 15px 50px ;margin: 0% 0%; padding: 5% 5%; background-color: white">
+            <img style="width:50%" src="https://media.istockphoto.com/photos/tree-picture-id543052538?k=6&m=543052538&s=612x612&w=0&h=YP7fBhjDe1dQGpj00Bu4ywsCjTljdW7dB_HKjp7_DDU="  alt="">
+            <br><br>
+                 <h3>Plants</h3>
+                <br>
+                 <a class="btn peach-gradient btn-rounded" role="button" href="{% url 'trees:tree-create' %}" style="color:black; margin-right: 5px; " >Create Plant</a>
+                 <a class="btn peach-gradient btn-rounded" role="button" href="{% url 'trees:tree-table-filter' %}" style="color:black; margin-right: 5px;" >All Plants</a>
+
+            </form>
+        </div>
+
+        <div class="col-lg-6">
+            <form style="border: 2px solid grey; border-radius: 15px 50px ;margin: 0% 0%; padding: 5% 5%; background-color:white;">
+            <img style="width:50%" src="https://media.istockphoto.com/photos/tree-picture-id543052538?k=6&m=543052538&s=612x612&w=0&h=YP7fBhjDe1dQGpj00Bu4ywsCjTljdW7dB_HKjp7_DDU="  alt="">
+            <br><br>
+                 <h3>Task Monitoring</h3>
+                <br>
+                <a class="btn peach-gradient btn-rounded" role="button" href="{% url 'trees:task-create' %}" style="color:black; margin-right: 5px; " >Create Task</a>
+                 <a class="btn peach-gradient btn-rounded" role="button" href="{% url 'trees:mytask-table-filter' %}" style="color:black; margin-right: 5px;" >My Tasks</a>
+                <a class="btn peach-gradient btn-rounded" role="button" href="{% url 'trees:task-table-filter' %}" style="color:black; margin-right: 5px;" >All Tasks</a>
+
+            </form>
+        </div>
+{% endif %}
+    </div>
+</div>
+{% endblock %}

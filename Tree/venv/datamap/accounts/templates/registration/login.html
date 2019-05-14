@@ -1,22 +1,42 @@
 {% extends 'index.html'%}
 {% block 'body' %}
 
+{% load static %}
 
+<link rel="stylesheet" type="text/css" href="{% static 'style accounts.css' %}">
+
+<div class="container">
     <div class="row">
-        <div class="col-lg-6">
-            <img style="width:100%" src="https://cdn0.tnwcdn.com/wp-content/blogs.dir/1/files/2015/03/mobile-security-laptop-fingerprint-730x442.jpg" alt="">
+        <div class="col-lg-4">
+            <form style="border: 2px solid grey; border-radius: 15px 50px ;margin: 0% 0%; padding: 5% 5%;margin-left: 0cm; background-color: white">
+            <img style="width:50%" src="https://media.istockphoto.com/photos/tree-picture-id543052538?k=6&m=543052538&s=612x612&w=0&h=YP7fBhjDe1dQGpj00Bu4ywsCjTljdW7dB_HKjp7_DDU="  alt="">
+            <br><br>
+                 <h3>Plants Database</h3>
+                 <p class="text-justify">The plants database contains plant entities in the region of Sofia, accompanied by relevant information about type of plant, exact location, health status, etc.</p>
+                 <p class="text-justify">The plants included constitute either culturally significant plants that are inseparable part of the heritage of Sofia or plants that are subject to regular monitoring and maintenance. </p>
+            </form>
         </div>
-        <div class="col-lg-6">
-                <form style="border: 1px solid grey; margin: 0% 0%; padding: 10% 5%" method="post">
+
+        <div class="col-lg-4">
+            <form style="border: 2px solid grey; border-radius: 15px 50px ;margin: 0% 0%; padding: 5% 5%;margin-left: 0cm; background-color:white">
+            <img style="width:75%" src="https://banner2.kisspng.com/20180605/oie/kisspng-privacy-policy-personally-identifiable-information-gardener-5b17241610eee0.0493094915282432220694.jpg"  alt="">
+            <br><br>
+                 <h3>Task Monitoring</h3>
+                 <p class="text-justify">The task monitoring presents an easy tool to create, track and assign plant maintenance tasks such as planting, fertilizing, trimming, watering, etc.</p>
+                 <p class="text-justify">The immediate objective of the task monitoring tool is to save efforts and costs while maintaining a green and healthy environment in the city. </p>
+            <br>
+         </form>
+        </div>
+        <div class="col-lg-4">
+                <form style="margin-top: 160px; padding: 10% 5%" method="post">
                   <h2>Login</h2>
                     {% csrf_token %}
                   {{ form.as_p }}
-                  <button type="submit">Login</button>
-                    <br>
-                    <span>Do not have an account?<a style="color:orange" href="{% url 'signup' %}">Sign up here</a></span>
+                  <button type="submit" class="btn peach-gradient btn-rounded">Login</button>
+                    <br><br>
+                    <span>Do not have an account? <a style="color:SandyBrown" href="{% url 'signup' %}"><b>Sign up here</b></a></span>
                 </form>
         </div>
     </div>
-
-
+</div>
 {% endblock %}

@@ -1,5 +1,6 @@
 from django.urls import path,re_path
 from . import views
+from django.views.generic import TemplateView
 
 
 app_name = 'trees'
@@ -19,6 +20,7 @@ urlpatterns =[
     re_path('^task-delete/(?P<pk>\d+)/$', views.TaskDelete.as_view(), name='task-delete'),
     re_path('^task-table-filter/$', views.FilteredTaskTableView.as_view(), name='task-table-filter'),
     re_path('^mytask-table-filter/$', views.MyFilteredTaskTableView.as_view(), name='mytask-table-filter'),
+    re_path('^home-page/$', TemplateView.as_view(template_name='home-page.html')),
 
 ]
 
