@@ -38,7 +38,7 @@
           {% if request.user.is_superuser %}
             <a class="dropdown-item" href="{% url 'trees:tree-create' %}">Links for a page for superuser</a>
           {% endif %}
-          <a class="dropdown-item" href="#">Profile</a>
+          <a class="dropdown-item" href="{% url 'user-profile' pk=user.pk %}">Profile</a>
           <a class="dropdown-item" href="{% url 'logout' %}?next=/accounts/login/">Logout</a>
         </div>
       </li>

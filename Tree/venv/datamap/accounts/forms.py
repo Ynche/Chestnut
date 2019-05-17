@@ -8,7 +8,8 @@
         #model = User
         #fields = ('username', 'password')
 
-#class ProfileUserForm(forms.ModelForm):
-    #class Meta:
-        #model = ProfileUser
-        #fields = ('username', 'password')
+class ProfileUserForm(forms.ModelForm):
+
+    class Meta:
+        model = ProfileUser
+        fields = ('username', 'password','email')
