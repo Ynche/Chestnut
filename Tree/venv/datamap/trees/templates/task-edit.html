@@ -1,15 +1,15 @@
-{% extends 'index.html'%}
-{% block 'body' %}
+<!--&lt;!&ndash;{% extends 'index.html'%}&ndash;&gt;-->
+<!--{% block 'body' %}-->
 
-{% load bootstrap4 %}
-{% bootstrap_css %}
-{{ form.media }}
-{% load static %}
+<!--{% load bootstrap4 %}-->
+<!--{% bootstrap_css %}-->
+<!--{{ form.media }}-->
+<!--{% load static %}-->
 
 
-    <link rel="stylesheet" type="text/css" href="{% static 'style_task_create.css' %}">
-</head>
-<body>
+<!--    <link rel="stylesheet" type="text/css" href="{% static 'style_task_create.css' %}">-->
+<!--</head>-->
+<!--<body>-->
 <div class="row">
     <div class="col-lg-3"></div>
     <div class="col-lg-6">
@@ -18,7 +18,7 @@
             {% bootstrap_form form %}
 
    <button type="submit" class="btn btn-primary" style="margin-top:5%">Save Changes</button>
-    <a class="btn btn-primary" href="/trees/task-delete/{{task.id}}/" style="margin-top:5%;background-color:red; border-color:red" >Delete</a>
+    <a class="btn btn-primary" href="{% url 'task-delete' task.id %}" style="margin-top:5%;background-color:red; border-color:red" >Delete</a>
 
 </form>
     </div>

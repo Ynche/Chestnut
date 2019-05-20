@@ -137,5 +137,5 @@ SHORT_DATE_FORMAT  = ['%d.%m.%Y']
 
 STATIC_URL = '/static/'
 
-
+#ACCOUNT_EMAIL_REQUIRED = True
 

@@ -3,7 +3,7 @@ from . import views
 from django.views.generic import TemplateView
 
 
-app_name = 'trees'
+# app_name = 'trees'
 
 urlpatterns =[
     #path('', views.index, name='initial'),

@@ -6,7 +6,7 @@
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav">
       <li class="nav-item active">
-        <!-- <a class="nav-link" href="{% url 'trees:tree-create' %}">Menu <span class="sr-only">(current)</span></a> -->
+         <a class="nav-link" href="{% url 'profile' %}">Menu <span class="sr-only">(current)</span></a>
       </li>
 
 
@@ -22,11 +22,11 @@
           Menu
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="{% url 'trees:tree-create' %}">Create Plant</a>
-          <a class="dropdown-item" href="{% url 'trees:tree-table-filter' %}">All Plants</a>
-          <a class="dropdown-item" href="{% url 'trees:task-create' %}">Create Task</a>
-          <a class="dropdown-item" href="{% url 'trees:mytask-table-filter' %}">My Tasks</a>
-          <a class="dropdown-item" href="{% url 'trees:task-table-filter' %}">All Tasks</a>
+          <a class="dropdown-item" href="{% url 'tree-create' %}">Create Plant</a>
+          <a class="dropdown-item" href="{% url 'tree-table-filter' %}">All Plants</a>
+          <a class="dropdown-item" href="{% url 'task-create' %}">Create Task</a>
+          <a class="dropdown-item" href="{% url 'mytask-table-filter' %}">My Tasks</a>
+          <a class="dropdown-item" href="{% url 'task-table-filter' %}">All Tasks</a>
 
         </div>
       </li>
@@ -36,7 +36,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           {% if request.user.is_superuser %}
-            <a class="dropdown-item" href="{% url 'trees:tree-create' %}">Links for a page for superuser</a>
+            <a class="dropdown-item" href="{% url 'tree-create' %}">Links for a page for superuser</a>
           {% endif %}
           <a class="dropdown-item" href="{% url 'user-profile' pk=user.pk %}">Profile</a>
           <a class="dropdown-item" href="{% url 'logout' %}?next=/accounts/login/">Logout</a>

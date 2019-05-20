@@ -1,5 +1,6 @@
 {% extends 'index.html'%}
 {% block 'body' %}
+{ % url 'tree-delete' %}
 
 <form method="post">
     {% csrf_token %}

@@ -78,6 +78,8 @@ class TaskForm(forms.ModelForm):
         model=Task
         fields= ('task_type','status','date_generated','date_completed','generation','description','task_force','cost','trees')
 
+
+
 class TaskTable(tables.Table):
     id = tables.TemplateColumn('<a href="/trees/task-edit/{{record.id}}/">{{record.id}}</a>')
     date_generated = tables.DateColumn(format='d.m.Y')
