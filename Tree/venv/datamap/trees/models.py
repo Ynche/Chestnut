@@ -5,6 +5,11 @@ from accounts.models import ProfileUser
 #https://docs.djangoproject.com/en/2.2/ref/models/fields/
 
 
+# class Kind(models.Model):
+#     kind_name = models.CharField(max_length=200)
+#
+#     def __str__(self):
+#         return f"{self.kind_name}"
 
 #https://docs.djangoproject.com/en/2.2/topics/i18n/timezones/
 class Tree(models.Model):
@@ -12,15 +17,22 @@ class Tree(models.Model):
     KIND_CHOICES = (
         ('', 'Select Kind'),
         ('A', 'Ash tree'),
-        ('L', 'Linden tree'),
-        ('P', 'Poplar tree'),
-        ('B', 'Birch tree'),
-        ('P', 'Plane tree'),
-        ('U', 'Paulovnia tree'),
-        ('M', 'Elm tree'),
+        ('B', 'Bush'),
         ('C', 'Chestnut Oak'),
-        ('W', 'White Oak'),
         ('E', 'English Oak tree'),
+        ('F', 'Flower'),
+        ('G', 'Grass'),
+        ('I', 'Birch tree'),
+        ('L', 'Linden tree'),
+        ('M', 'Elm tree'),
+        ('О', 'Poplar tree'),
+        ('P', 'Plane tree'),
+        ('R', 'Мulberry tree'),
+        ('S', 'Spruse tree'),
+        ('U', 'Paulovnia tree'),
+        ('Y', 'Cypress tree'),
+        ('W', 'White Oak'),
+
 
     )
     DISTRICT_CHOICES = (
@@ -69,15 +81,16 @@ class Tree(models.Model):
 
     type = models.CharField(blank=False,max_length=1, choices=TYPE_CHOICES)
     kind = models.CharField(blank=False,max_length=1, choices=KIND_CHOICES)
+    # kind = models.ForeignKey(Kind, on_delete=models.CASCADE, blank=True)
     latin_name = models.CharField(max_length=200)
     description = models.TextField(blank=True,null=True)
-    origin_date = models.DateField(help_text="Use the following format:YYYY-MM-DD",blank=True,null=True)
-    end_date = models.DateField(help_text="Use the following format:YYYY-MM-DD",blank=True,null=True)
+    origin_date = models.DateField(blank=True,null=True)
+    end_date = models.DateField(blank=True,null=True)
     lifecycle_status = models.CharField(blank=False,max_length=1, choices=LIFECYCLE)
     size = models.PositiveIntegerField(blank=True,null=True)
     district = models.CharField(blank=False,max_length=1, choices=DISTRICT_CHOICES)
-    latitude = models.DecimalField(max_digits=7,decimal_places=5)
-    longitude = models.DecimalField(max_digits=8,decimal_places=5)
+    latitude = models.DecimalField(max_digits=8,decimal_places=6,error_messages= {'required': "Please, fill with the format specified",'invalid': "Please, use the format specified"})
+    longitude = models.DecimalField(max_digits=9,decimal_places=6,error_messages= {'required': "Please, fill with the format specified",'invalid': "Please, use the format specified"})
     user = models.ForeignKey(ProfileUser, on_delete=models.CASCADE)
 
 

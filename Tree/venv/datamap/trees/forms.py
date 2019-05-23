@@ -15,24 +15,32 @@ from django.contrib.auth.models import User
 
 #https://github.com/monim67/django-bootstrap-datepicker-plus/blob/master/docs/Walkthrough.rst
 
+def get_user_list():
+    user_list = []
+    users = User.objects.all()
+    x = 1
+    for user in users:
+        user_list.append((str(x),user.username))
+        x +=1
+    return  user_list
+
 class TreeForm(forms.ModelForm):
-    #kind = list(Tree.KIND_CHOICES)
+    kind = list(Tree.KIND_CHOICES)
     type = forms.ChoiceField(choices=Tree.TYPE_CHOICES, label="Type (required)")
-    kind = forms.ChoiceField(choices=Tree.KIND_CHOICES, label="Kind (required)")
+    # kind = forms.ModelChoiceField(queryset=Kind.objects.all(),label="Kind (required)",widget=forms.Select(attrs={'class': 'form-control'}))
     #type = list(Tree.TYPE)
     #type = forms.CharField(max_length=30, widget=forms.Select(choices=Tree.TYPE))
-    latin_name = forms.CharField(required=False,label="Latin Name (not required)",validators=[RegexValidator(r'^([A-Z][a-z]+\s*){1,3}$',message='Use convention http://thorpetrees.com/advice/table-of-latin-common-names/'
-    )], widget=forms.TextInput(attrs={'class':'form-control'}))
+    latin_name = forms.CharField(required=False,label="Latin Name (not required)", widget=forms.TextInput(attrs={'class':'form-control'}))
     description = forms.CharField(required=False, label="Description (not required)",widget=forms.Textarea(attrs={'class':'form-control'}))
     #origin_date = forms.DateField(required=False, widget=forms.TextInput(attrs={'class':'form-control'}))
-    origin_date = forms.DateField(required=False,label="Origin Date (not required)",help_text="Format dd.mm.yyyy",input_formats=settings.DATE_INPUT_FORMATS,widget=DatePickerInput(options={"format": "mm/dd/yyyy","autoclose": True}))
-    end_date = forms.DateField(required=False,input_formats=settings.DATE_INPUT_FORMATS,label="End Date (not required)",help_text="Format dd.mm.yyyy", widget=forms.DateInput(attrs={'class':'form-control'},format='%d.%m.%Y'))
+    origin_date = forms.DateField(required=False,label="Plant Origin Date (not required)",help_text="Format dd.mm.yyyy",input_formats=settings.DATE_INPUT_FORMATS,widget=DatePickerInput(options={"format": "mm/dd/yyyy","autoclose": True}))
+    end_date = forms.DateField(required=False,input_formats=settings.DATE_INPUT_FORMATS,label="Plant End Date (not required)",help_text="Format dd.mm.yyyy", widget=forms.DateInput(attrs={'class':'form-control'},format='%d.%m.%Y'))
     lifecycle_status = forms.ChoiceField(choices=Tree.LIFECYCLE,label="Lifecycle Status (required)")
-    size = forms.IntegerField(required=False,label="Size (not required)",help_text="Grass/Flowers in sqm",widget=forms.TextInput(attrs={'class':'form-control'}))
+    size = forms.IntegerField(required=False,label="Size/Length (not required)",help_text="For Trees length in meters. For Grass and Flowers size area in sqm.",widget=forms.TextInput(attrs={'class':'form-control'}))
     district = forms.ChoiceField(choices=Tree.DISTRICT_CHOICES,label="District (required)")
-    latitude = forms.DecimalField(required=True,label="Latitude (required)",min_value=-90,max_value=90,max_digits=7,decimal_places=5,validators=[RegexValidator(r'^\d+.\d{5}$',message='Example:41.40338')],
+    latitude = forms.DecimalField(required=True,label="Latitude in DD (required)",help_text="Sofia min 42.602832, max 42.786617",error_messages={'required': "Please, use the correct format"},min_value=-90,max_value=90,max_digits=8,decimal_places=6,validators=[RegexValidator(r'^\d+.\d{6}$',message='Example:41.40338')],
                                    widget=forms.NumberInput(attrs={'class':'form-control'}))
-    longitude = forms.DecimalField(required=True,label="Longtitude (required)",min_value=-180,max_value=180,max_digits=8,decimal_places=5,validators=[RegexValidator(r'^\d+.\d{5}$',message='Example:2.17403')],
+    longitude = forms.DecimalField(required=True,label="Longitude in DD (required)",help_text="Sofia min 23.19278, max 23.453071",error_messages={'required': "Please, use the correct format"},min_value=-180,max_value=180,max_digits=9,decimal_places=6,validators=[RegexValidator(r'^\d+.\d{6}$',message='Example:2.17403')],
                                    widget=forms.NumberInput(attrs={'class':'form-control'}))
 
     class Meta:
@@ -57,9 +65,12 @@ class TreeTable(tables.Table):
 
 class TreeFilter(django_filters.FilterSet):
     type = django_filters.ChoiceFilter(choices=Tree.TYPE_CHOICES, empty_label='Type')
+
     kind = django_filters.ChoiceFilter(choices=Tree.KIND_CHOICES, empty_label='Kind')
+    # kind = django_filters.ChoiceFilter(choices=Kind.objects.all(), empty_label='Kind')
     lifecycle_status = django_filters.ChoiceFilter(choices=Tree.LIFECYCLE, empty_label='Lifecycle Status')
     district = django_filters.ChoiceFilter(choices=Tree.DISTRICT_CHOICES, empty_label='District')
+    user = django_filters.ChoiceFilter(choices=get_user_list, empty_label="Users")
     class Meta:
         model = Tree
         fields = ['id','kind','type','latin_name','description','origin_date','end_date','size','lifecycle_status','district','latitude','longitude','user']
@@ -72,7 +83,7 @@ class TaskForm(forms.ModelForm):
     date_completed = forms.DateField(required=False, label="Date Completed (not required)",help_text="Format dd.mm.yyyy",input_formats=settings.DATE_INPUT_FORMATS,widget=forms.DateInput(attrs={'class':'form-control'},format='%d.%m.%Y'))
     generation = forms.ChoiceField(choices=Task.GENERATION_CHOICES,label="Generation Type (required)")
     description = forms.CharField(required=False, label="Description (not required)",widget=forms.Textarea(attrs={'class':'form-control'}))
-    task_force = forms.CharField(required=False, label="Task Force (not required)",widget=forms.TextInput(attrs={'class':'form-control'}))
+    task_force = forms.CharField(required=False, label="Task Force Assignee (not required)",widget=forms.TextInput(attrs={'class':'form-control'}))
     cost = forms.DecimalField(required=False,label="Cost (not required)",help_text="Format 12.34",max_digits=8,decimal_places=2,widget=forms.NumberInput(attrs={'class':'form-control'}))
     class Meta:
         model=Task
@@ -89,21 +100,20 @@ class TaskTable(tables.Table):
         template_name = 'django_tables2/bootstrap.html'
         fields = ['id','task_type','status','date_generated','date_completed','generation','description','task_force','cost','all_trees','user']
 
-def get_user_list():
-    user_list = []
-    users = User.objects.all()
-    x = 0
-    for user in users:
-        user_list.append((str(x),user.username))
-        x +=1
-    return  user_list
+
 
 class TaskFilter(django_filters.FilterSet):
     task_type = django_filters.ChoiceFilter(choices=Task.TASK_TYPE_CHOICES,empty_label='Task Type')
     status = django_filters.ChoiceFilter(choices=Task.STATUS_CHOICES, empty_label='Status')
     generation = django_filters.ChoiceFilter(choices=Task.GENERATION_CHOICES, empty_label="Generation Type")
-    #user = django_filters.ChoiceFilter(choices=get_user_list,empty_label="Users") #This works for users when the task is created by the user
+    user = django_filters.ChoiceFilter(choices=get_user_list,empty_label="Users") #This works for users when the task is created by the user
     class Meta:
         model = Task
         fields = ['id','task_type','status','date_generated','date_completed','generation','description','task_force','cost','user','trees']
 
+# class KindForm(forms.ModelForm):
+#     name = forms.CharField(required=True, abel="Kind (required)",widget=forms.TextInput(attrs={'class': 'form-contol'}))
+#
+#     class Meta:
+#         model = Kind
+#         fields = ('kind_name',)

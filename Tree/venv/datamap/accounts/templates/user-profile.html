@@ -4,38 +4,37 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'style accounts.css' %}">
 
-
     <div class="container marketing">
          <h1 >Hello,  <span style="font-size: 2rem; color:SandyBrown"><b>{{user}}</b></span>!</h1>
         <br>
         <h3>This is you profile! Choose one of the actions below:</h3>
-      <div class="row" style="margin-top:10%">
+      <div class="row" style="margin-top:5%">
         <div class="col-lg-4 text-center">
-          <img style="width:25%" src="https://www.dcu.ie/sites/default/files/iss/images/Icons_V2-01.png" alt="Generic placeholder image">
+           <img style="width:50%" src="{% static 'password-change.jpg' %}"  alt="">
             <br><br>
             <h2>Change password</h2>
-          <p><a class="btn btn-secondary" style="background-color:SandyBrown; color:black" href="{% url 'password_change' %}" role="button">View details &raquo;</a></p>
+            <br>
+          <p><a class="btn btn-secondary" href="{% url 'password_change' %}" role="button">View details &raquo;</a></p>
         </div><!-- /.col-lg-4 -->
 
           <div class="col-lg-4 text-center">
-            <img style="width:50%" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnhLedyw4Kh3wkzJD0ytWGHTQF01pqJ0N5l8CO9n4MmZoxF71rmQ" alt="Generic placeholder image">
+            <img style="width:65%" src="{% static 'password-resset.png' %}"  alt="">
           <br><br>
             <h2>Reset password</h2>
-          <p><a class="btn btn-secondary" style="background-color:SandyBrown; color:black" href="{% url 'password_reset' %}" role="button">View details &raquo;</a></p>
+              <br>
+          <p><a class="btn btn-secondary" href="{% url 'password_reset' %}" role="button">View details &raquo;</a></p>
         </div><!-- /.col-lg-4 -->
 
- <div class="col-lg-4 text-center">
-            <img style="width:50%" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnhLedyw4Kh3wkzJD0ytWGHTQF01pqJ0N5l8CO9n4MmZoxF71rmQ" alt="Generic placeholder image">
+            <div class="col-lg-4 text-center">
+            <img style="width:50%" src="{% static 'logout.png' %}"  alt="">
           <br><br>
-            <h2></h2>
-          <p><a class="btn btn-secondary" style="background-color:SandyBrown; color:black" href="{% url 'logout' %}?next=/accounts/login/" role="button">Logout</a></p>
+            <h2>Logout</h2>
+                <br>
+          <p><a class="btn btn-secondary"  href="{% url 'logout' %}?next=/accounts/login/" role="button">Logout</a></p>
         </div><!-- /.col-lg-4 -->
 
-
-
-      </div><!-- /.row -->
+     </div><!-- /.row -->
 
 </div>
-
 
 {% endblock %}

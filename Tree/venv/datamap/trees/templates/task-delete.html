@@ -1,21 +1,33 @@
 {% extends 'index.html'%}
 {% block 'body' %}
+{% load static %}
     <!-- {% url 'task-delete' task.id %} -->
+ <link rel="stylesheet" type="text/css" href="{% static 'style accounts.css' %}">
+{% if not user.is_authenticated %}
+        <p>
+             You are not Authorized.
+        </p>
+
+        <p>
+            If you have an account, please, <a style="color:orange" href="{% url 'login' %}">Login here</a>
+        </p>
+
+{% else %}
 
 <form method="post">
     {% csrf_token %}
     <h2>Are you sure you want to delete Task {{task.id}} {{task.get_task_type_display}} with status {{task.get_status_display}}</h2>
     <!-- the get__display does not show in the html!!!!!!!!It shows now -->
     <div class="row">
-        <div class="col-lg-2">
-            <input type="submit" class="btn btn-danger" value="Confirm" >
+        <div class="col-lg-6">
+            <img style="width:65%" src="{% static 'gardener2.jpg' %}"  alt="">
         </div>
         <div class="col-lg-6">
-            <img src="https://media.istockphoto.com/photos/tree-picture-id543052538?k=6&m=543052538&s=612x612&w=0&h=YP7fBhjDe1dQGpj00Bu4ywsCjTljdW7dB_HKjp7_DDU=" style="width:50%;"></img>
+            <br>
+            <input type="submit" class="btn btn-danger" value="Confirm" >
         </div>
-        <div class="col-lg-4">
-        </div>
+
     </div>
     </form>
-
+{% endif %}
 {% endblock %}

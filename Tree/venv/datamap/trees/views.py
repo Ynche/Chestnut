@@ -24,9 +24,16 @@ class TreeCreate(CreateView):
     success_url = '/trees/tree-table-filter/'
 
     def form_valid(self, form):
-        user = ProfileUser.objects.all().filter(user__pk=self.request.user.id)[0]
-        form.instance.user = user
-        return super().form_valid(form)
+        try:
+            user = ProfileUser.objects.all().filter(user__pk=self.request.user.id)[0]
+            form.instance.user = user
+            if form.instance.user == user:
+                return super().form_valid(form)
+            else:
+                return render(self.request, 'permission-denied.html')
+        except:
+            return render(self.request, 'permission-denied.html')
+
 
 class TreeUpdate(UpdateView):
     model = Tree
@@ -34,11 +41,34 @@ class TreeUpdate(UpdateView):
     template_name = 'tree-edit.html'
     success_url = '/trees/tree-table-filter/'
 
+    def form_valid(self, form):
+        try:
+            user = ProfileUser.objects.all().filter(user__pk=self.request.user.id)[0]
+            form.instance.user = user
+            if form.instance.user == user:
+                return super().form_valid(form)
+            else:
+                return render(self.request, 'permission-denied.html')
+        except:
+            return render(self.request, 'permission-denied.html')
+
 
 class TreeDelete(DeleteView):
     model = Tree
     template_name = 'tree-delete.html'
     success_url = '/trees/tree-table-filter/'
+
+    def form_valid(self, form):
+        try:
+            user = ProfileUser.objects.all().filter(user__pk=self.request.user.id)[0]
+            form.instance.user = user
+            if form.instance.user == user:
+                return super().form_valid(form)
+            else:
+                return render(self.request, 'permission-denied.html')
+        except:
+            return render(self.request, 'permission-denied.html')
+
 
 
 def tree_table(request):
@@ -68,14 +98,16 @@ class TaskCreate(CreateView,LoginRequiredMixin):
     template_name = 'task-create.html'
     success_url = '/trees/task-table-filter/'
 
-
     def form_valid(self, form):
-        user = ProfileUser.objects.all().filter(user__pk=self.request.user.id)[0]
-        form.instance.user = user
-        if form.instance.user == user:
-            return super(TaskCreate, self).form_valid(form)
-        else:
-            return HttpResponseRedirect('/accounts/login/')
+        try:
+            user = ProfileUser.objects.all().filter(user__pk=self.request.user.id)[0]
+            form.instance.user = user
+            if form.instance.user == user:
+                return super().form_valid(form)
+            else:
+                return render(self.request, 'permission-denied.html')
+        except:
+            return render(self.request, 'permission-denied.html')
 
     #def form_valid(self, form):
         #user = ProfileUser.objects.all().filter(user__pk=self.request.user.id)[0]
@@ -129,12 +161,15 @@ class TaskDelete(DeleteView):
     success_url = '/trees/task-table-filter/'
 
     def form_valid(self, form):
-        user = ProfileUser.objects.all().filter(user__pk=self.request.user.id)[0]
-        form.instance.user = user
-        if form.instance.user == user:
-            return super().form_valid(form)
-        else:
-            return render(request, 'permission-denied.html')
+        try:
+            user = ProfileUser.objects.all().filter(user__pk=self.request.user.id)[0]
+            form.instance.user = user
+            if form.instance.user == user:
+                return super().form_valid(form)
+            else:
+                return render(self.request, 'permission-denied.html')
+        except:
+            return render(self.request, 'permission-denied.html')
 
 
     #def get(self, request, pk):
@@ -176,4 +211,9 @@ class MyFilteredTaskTableView(SingleTableMixin, FilterView,LoginRequiredMixin):
         except:
             return []
 
+# class CreateKind(CreateView):
+#     model = Kind
+#     template_name = 'tree-kind-create.html'
+#     form_class = KindForm
+#     success_url = '/trees/home-page/'
 
