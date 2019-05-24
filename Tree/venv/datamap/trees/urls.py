@@ -21,6 +21,7 @@ urlpatterns =[
     re_path('^task-table-filter/$', views.FilteredTaskTableView.as_view(), name='task-table-filter'),
     re_path('^mytask-table-filter/$', views.MyFilteredTaskTableView.as_view(), name='mytask-table-filter'),
     re_path('^home-page/$', TemplateView.as_view(template_name='home-page.html')),
+    re_path('^tree-download/$', views.export_csv_view, name='tree-download.html'),
 
 
 ]

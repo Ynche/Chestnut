@@ -1,0 +1,24 @@
+{% extends 'index.html'%}
+{% block 'body' %}
+{% load static %}
+
+ <link rel="stylesheet" type="text/css" href="{% static 'style accounts.css' %}">
+
+{% if not user.is_authenticated %}
+        <p>
+             You are not Authorized.
+        </p>
+
+        <p>
+            If you have an account, please, <a style="color:orange" href="{% url 'login' %}">Login here</a>
+        </p>
+
+{% else %}
+
+<form>
+    {% csrf_token %}
+    <h1>You have downloaded all Plants.</h1>
+
+    </form>
+{% endif %}
+{% endblock %}

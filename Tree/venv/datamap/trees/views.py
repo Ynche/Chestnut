@@ -9,6 +9,9 @@ from accounts.models import ProfileUser,User
 from django.contrib.auth.mixins import LoginRequiredMixin,AccessMixin
 from django.http import HttpResponseRedirect, HttpResponse
 from django.template import RequestContext
+import csv
+
+from django.http import StreamingHttpResponse
 
 # Create your views here.
 
@@ -217,3 +220,14 @@ class MyFilteredTaskTableView(SingleTableMixin, FilterView,LoginRequiredMixin):
 #     form_class = KindForm
 #     success_url = '/trees/home-page/'
 
+def export_csv_view(request):
+    # Create the HttpResponse object with the appropriate CSV header.
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="plants.csv"'
+
+    writer = csv.writer(response)
+    data = Tree.objects.all()
+    for i in data:
+        writer.writerow([i.get_kind_display(),i.get_type_display(),i.size])
+
+    return response

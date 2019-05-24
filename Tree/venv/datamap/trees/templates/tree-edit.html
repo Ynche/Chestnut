@@ -18,10 +18,12 @@
             {% bootstrap_form form %}
 
     <button type="submit" class="btn btn-primary" style="margin-top:5%">Save Changes</button>
-    <a class="btn btn-primary" href="/trees/tree-delete/{{tree.id}}/" style="margin-top:5%;background-color:red; border-color:red" >Delete</a>
+    <a class="btn btn-primary" href="{% url 'tree-delete' tree.id %}" style="margin-top:5%;background-color:red; border-color:red" >Delete</a>
 </form>
     </div>
     <div class="col-lg-3"></div>
 </div>
 
 {% endblock %}
+
+<!-- href="/trees/tree-delete/{{tree.id}}/"-->

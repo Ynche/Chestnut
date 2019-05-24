@@ -70,7 +70,7 @@ class TreeFilter(django_filters.FilterSet):
     # kind = django_filters.ChoiceFilter(choices=Kind.objects.all(), empty_label='Kind')
     lifecycle_status = django_filters.ChoiceFilter(choices=Tree.LIFECYCLE, empty_label='Lifecycle Status')
     district = django_filters.ChoiceFilter(choices=Tree.DISTRICT_CHOICES, empty_label='District')
-    user = django_filters.ChoiceFilter(choices=get_user_list, empty_label="Users")
+    user = django_filters.ChoiceFilter(choices=get_user_list, empty_label="User")
     class Meta:
         model = Tree
         fields = ['id','kind','type','latin_name','description','origin_date','end_date','size','lifecycle_status','district','latitude','longitude','user']
@@ -106,7 +106,7 @@ class TaskFilter(django_filters.FilterSet):
     task_type = django_filters.ChoiceFilter(choices=Task.TASK_TYPE_CHOICES,empty_label='Task Type')
     status = django_filters.ChoiceFilter(choices=Task.STATUS_CHOICES, empty_label='Status')
     generation = django_filters.ChoiceFilter(choices=Task.GENERATION_CHOICES, empty_label="Generation Type")
-    user = django_filters.ChoiceFilter(choices=get_user_list,empty_label="Users") #This works for users when the task is created by the user
+    user = django_filters.ChoiceFilter(choices=get_user_list,empty_label="User") #This works for users when the task is created by the user
     class Meta:
         model = Task
         fields = ['id','task_type','status','date_generated','date_completed','generation','description','task_force','cost','user','trees']
